@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Файловое хранилище</title>
+    <link rel="stylesheet" href="styles.css" />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism.min.css"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.30.0/themes/prism-tomorrow.min.css"
+    />
+    <!-- <link rel="stylesheet" href="prism.css" /> -->
+  </head>
+  <body>
+    <header>
+      <button id="add-folder">Создать папку</button>
+      <button id="delete-folder">Удалить папку</button>
+      <button id="upload-file-button">Загрузить файл</button>
+      <input
+        type="file"
+        id="upload-file"
+        style="display: none"
+        placeholder="Загрузить файл"
+      />
+      <script>
+        document
+          .getElementById("upload-file-button")
+          .addEventListener("click", () => {
+            document.getElementById("upload-file").click();
+          });
+      </script>
+      <button id="download-file">Скачать файл</button>
+      <button id="delete-file">Удалить файл</button>
+      <button id="rename-file">Переименовать</button>
+      <button type="button" id="edit-description">
+        Редактировать описание
+      </button>
+    </header>
+    <div class="container">
+      <div class="tree-view">
+        <ul id="file-tree"></ul>
+        <!-- <button id="add-folder">Добавить папку</button> -->
+      </div>
+      <div class="file-view">
+        <div id="tabs"></div>
+        <div id="file-content">
+          <pre><code></code></pre>
+        </div>
+      </div>
+    </div>
+    <div id="modal-bg">
+      <div id="modal-description">
+        <label for="modal-description-input">Описание файла:</label>
+        <input type="text" id="modal-description-input" style="width: 100%" />
+        <div style="margin-top: 10px; text-align: right">
+          <button id="modal-description-cancel">Отмена</button>
+          <button id="modal-description-ok">Загрузить</button>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/scripts/prism.js"></script>
+    <script type="module" src="/scripts/main.js"></script>
+  </body>
+</html>

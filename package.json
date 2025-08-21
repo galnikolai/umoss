@@ -1,0 +1,33 @@
+{
+  "name": "umoss",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "clean:client": "rm -rf public/scripts/*",
+    "dev:client": "npm run clean:client && tsc -w",
+    "dev:server:build": "tsc -p tsconfig.server.json -w",
+    "dev:server:run": "nodemon --watch dist/server --ext js,json --exec \"node dist/server/server.js\"",
+    "dev": "concurrently -n client,server:build,server:run -c green,cyan,magenta \"npm:dev:client\" \"npm:dev:server:build\" \"npm:dev:server:run\"",
+    "build:client": "npm run clean:client && tsc",
+    "build:server": "tsc -p tsconfig.server.json",
+    "build": "npm run build:client && npm run build:server",
+    "start": "node dist/server/server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@types/express": "^5.0.3",
+    "express": "^5.1.0",
+    "multer": "^2.0.2",
+    "prismjs": "^1.30.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.2"
+  },
+  "devDependencies": {
+    "@types/multer": "^2.0.0",
+    "concurrently": "^9.2.0",
+    "nodemon": "^3.1.10"
+  }
+}
