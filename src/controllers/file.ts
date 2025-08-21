@@ -104,8 +104,6 @@ export class File {
       this.modalOk.onclick = async () => {
         if (this._modalState.editId) {
           const updated = await updateNode(this._modalState.editId, {
-            name: this._modalState.nodeName || "",
-            type: this._modalState.nodeType || "file",
             description: this.modalInput ? this.modalInput.value : "",
           });
           if (typeof this.refreshCallback === "function") {
