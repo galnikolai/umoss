@@ -43,7 +43,7 @@ router.put("/nodes/:id", async (req, res, next) => {
 router.delete("/nodes/:id", async (req, res, next) => {
   try {
     await deleteNode(req.params.id);
-    res.sendStatus(200);
+    res.sendStatus(204);
   } catch (e) {
     next(e);
   }
