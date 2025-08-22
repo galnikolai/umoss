@@ -121,19 +121,51 @@ class Main {
       return;
     }
     if (confirm(`Удалить папку ${node.name}?`)) {
+      const collectDescendants = (parentId: string): Node[] => {
+        const stack: string[] = [parentId];
+        const result: Node[] = [];
+        while (stack.length > 0) {
+          const currentId = stack.pop();
+          if (!currentId) continue;
+          const children = this.tree.findChildren(currentId);
+          for (const child of children) {
+            result.push(child);
+            stack.push(child.id);
+          }
+        }
+        return result;
+      };
+
+      const descendants = collectDescendants(node.id).filter(
+        (n) => n && n.type === "file"
+      );
+
+      for (const fileNode of descendants) {
+        try {
+          this.file.invalidateCache(fileNode.id);
+        } catch (_) {}
+        this.closeTab(fileNode.id);
+      }
+
       await deleteExistingNode(node.id);
       this.tree.removeNodeFromTree(node.id);
-      this.selectedNode = null;
-      const codeElement = this.contentElement?.querySelector("code");
-      if (codeElement) {
-        codeElement.textContent = "";
-        codeElement.className = "";
+
+      const nextActiveId = storeGetActiveTabId();
+      if (nextActiveId != null) {
+        this.activateTab(nextActiveId);
+      } else {
+        this.selectedNode = null;
+        const codeElement = this.contentElement?.querySelector("code");
+        if (codeElement) {
+          codeElement.textContent = "";
+          codeElement.className = "";
+        }
+        if (this.descriptionInput) {
+          this.descriptionInput.value = "";
+        }
+        delete this.contentElement?.dataset.node;
+        this.handleSelectionChange(null);
       }
-      if (this.descriptionInput) {
-        this.descriptionInput.value = "";
-      }
-      delete this.contentElement?.dataset.node;
-      this.handleSelectionChange(null);
     }
   }
 
